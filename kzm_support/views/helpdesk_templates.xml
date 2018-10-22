@@ -5,12 +5,14 @@
         <xpath expr="//h3" position="before">
             <div class="row mb16">
                 <div class="col-sm-3" id="right-column">
-                    <t t-if="team.use_website_helpdesk_form">
-                        <div class="btn-group btn-block mb16" style="margin-top: 2em">
-                            <a id="submit-ticket" t-attf-href="/helpdesk/#{team.id}/submit">
-                             <button t-attf-class="btn btn-primary btn-lg #{'col-sm-10' if multi_type else 'col-sm-12'}">Submit an Issue</button>
-                            </a>
-                        </div>
+                    <t t-if="team">
+                        <t t-if="team.use_website_helpdesk_form">
+                            <div class="btn-group btn-block mb16" style="margin-top: 2em">
+                                <a id="submit-ticket" t-attf-href="/helpdesk/#{team.id}/submit">
+                                 <button t-attf-class="btn btn-primary btn-lg #{'col-sm-10' if multi_type else 'col-sm-12'}">Submit an Issue</button>
+                                </a>
+                            </div>
+                        </t>
                     </t>
                 </div>
             </div>

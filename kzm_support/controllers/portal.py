@@ -4,15 +4,29 @@
 from odoo import http
 from odoo.http import request
 from odoo.tools.translate import _
-from odoo.addons.portal.controllers.portal import get_records_pager, pager as portal_pager, CustomerPortal
+from odoo.addons.helpdesk.controllers.portal import get_records_pager, portal_pager, CustomerPortal
 from odoo.osv.expression import OR
 from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
+
+
+class WebsiteForm(WebsiteForm):
+
+    @http.route('''/helpdesk/<model("helpdesk.team", "[('use_website_helpdesk_form','=',True)]"):team>/submit''', type='http', auth="public", website=True)
+    def website_helpdesk_form(self, team, **kwargs):
+        default_values = {}
+        if request.env.user.partner_id != request.env.ref('base.public_partner'):
+            default_values['name'] = request.env.user.partner_id.name
+            default_values['email'] = request.env.user.partner_id.email
+            default_values['type'] = request.env['helpdesk.ticket.type'].sudo().search([])
+
+        return request.render("website_helpdesk_form.ticket_submit", {'team': team, 'default_values': default_values})
 
 
 class CustomerPortal(CustomerPortal):
 
     @http.route(['/my/tickets', '/my/tickets/page/<int:page>'], type='http', auth="user", website=True)
     def my_helpdesk_tickets(self, page=1, date_begin=None, date_end=None, sortby=None, search=None, search_in='content', **kw):
+
         values = self._prepare_portal_layout_values()
         user = request.env.user
         domain = ['|', ('user_id', '=', user.id), ('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]
@@ -89,16 +103,3 @@ class CustomerPortal(CustomerPortal):
         values['team'] = teams
 
         return request.render("helpdesk.portal_helpdesk_ticket", values)
-
-
-class WebsiteForm(WebsiteForm):
-
-    @http.route('''/helpdesk/<model("helpdesk.team", "[('use_website_helpdesk_form','=',True)]"):team>/submit''', type='http', auth="public", website=True)
-    def website_helpdesk_form(self, team, **kwargs):
-        default_values = {}
-        if request.env.user.partner_id != request.env.ref('base.public_partner'):
-            default_values['name'] = request.env.user.partner_id.name
-            default_values['email'] = request.env.user.partner_id.email
-            default_values['type'] = request.env['helpdesk.ticket.type'].sudo().search([])
-
-        return request.render("website_helpdesk_form.ticket_submit", {'team': team, 'default_values': default_values})

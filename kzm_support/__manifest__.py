@@ -16,7 +16,7 @@
         'website_helpdesk_form',
     ],
     "data": [
-        "data/data_helpdesk_ticket_type.xml"
+        "data/data_helpdesk_ticket_type.xml",
         "security/security.xml",
         "security/ir.model.access.csv",
         "views/helpdesk_views.xml",

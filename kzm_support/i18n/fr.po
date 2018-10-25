@@ -21,6 +21,11 @@ msgid "<strong class=\"col-md-2\">Ticket Type</strong>"
 msgstr "<strong class=\"col-md-2\">Type de ticket</strong>"
 
 #. module: kzm_support
+#: model:ir.ui.view,arch_db:kzm_support.ticket_submit
+msgid "Attached files"
+msgstr "Fichiers attachés"
+
+#. module: kzm_support
 #: model:ir.model.fields,field_description:kzm_support.field_helpdesk_ticket_contract_state
 #: model:ir.ui.view,arch_db:kzm_support.portal_helpdesk_ticket
 msgid "Contract state"

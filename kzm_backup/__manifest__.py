@@ -2,7 +2,7 @@
 {
     'name': "kzm_backup",
 
-    'summary': "Manage Odoo Instance backup"
+    'summary': """Manage Odoo Instance backup""",
 
     'description': """
     """,

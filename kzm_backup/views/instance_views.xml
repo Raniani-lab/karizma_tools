@@ -111,6 +111,7 @@
                                     <div class="oe_clear"></div>
                                 </div>
                                 <div t-attf-class="oe_kanban_content">
+                                    <field name="backup_format" invisible="1"/>
                                     <!-- title -->
                                     Host :
                                     <field name="host"/>

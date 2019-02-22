@@ -13,10 +13,11 @@ from datetime import datetime, timedelta
 from glob import iglob
 
 from odoo import _, api, exceptions, fields, models, tools
+from odoo.exceptions import ValidationError
 from odoo.service import db
 
-
 _logger = logging.getLogger(__name__)
+
 
 class Instance(models.Model):
     _name = 'kzm.instance'
@@ -33,12 +34,9 @@ class Instance(models.Model):
         help='Absolute path for storing the backups',
         required=True
     )
-
-
-
-    host = fields.Char(string="Host")
-    user = fields.Char(string="User")
-    port = fields.Char("Port")
+    host = fields.Char(string="Host", )
+    user = fields.Char(string="User",)
+    port = fields.Char("Port", )
     ssh_key = fields.Text(string="SSH Key")
 
     db_name = fields.Char(string="DB name")
@@ -93,7 +91,7 @@ class Instance(models.Model):
         help="Choose the format for this backup."
     )
 
-    backup_ids = fields.One2many('kzm.backup','instance_id')
+    backup_ids = fields.One2many('kzm.backup', 'instance_id')
 
     @api.model
     def _default_folder(self):
@@ -106,17 +104,17 @@ class Instance(models.Model):
     def ssh_connection(self):
         self.ensure_one()
 
-        host = self.sftp_host
-        user = self.sftp_user
+        host = self.host
+        user = self.user
 
         _logger.debug(
-            "Trying to connect to %s@%s with SSH"%(user,host),
-           )
+            "Trying to connect to %s@%s with SSH" % (user, host),
+        )
 
         connect_kwargs = {'password': self.ssh_key}
 
-        #return Connection(**params)
-        return Connection('%s@%s'%(user,host),connect_kwargs=connect_kwargs)
+        # return Connection(**params)
+        return Connection('%s@%s' % (user, host), connect_kwargs=connect_kwargs)
 
     def action_backup(self):
         backup = None
@@ -125,6 +123,7 @@ class Instance(models.Model):
             dbuser = rec.db_user
             host = rec.host
             port = rec.port
+            pswd_user = rec.password_user_db
             filename = self.filename(datetime.now(), ext=rec.backup_format)
             with rec.backup_log():
                 # Directory must exist
@@ -137,7 +136,10 @@ class Instance(models.Model):
                 if rec.backup_format == "sql":
                     try:
                         cnx = rec.ssh_connection()
-                        cmd = 'export PGPASSWORD=%s && mkdir -p %s && pg_dump -U %s  %s > %s' % (rec.ssh_key, rec.folder, dbuser, dbname, path)
+                        cmd = 'export PGPASSWORD=%s && mkdir -p %s && pg_dump -U %s  %s > %s' % (
+                                            pswd_user, rec.folder, dbuser, dbname, path
+                        )
+
                         res = cnx.run(cmd)
                         print(res)
                         self.env['kzm.backup'].create({
@@ -145,45 +147,50 @@ class Instance(models.Model):
                             "path": path,
                             "date": datetime.now(),
                             "statut": "success",
-                            "instance_id" : rec.id
-
+                            "instance_id": rec.id
                         })
 
-                    except:
+                    except Exception as e:
                         self.env['kzm.backup'].create({
                             "name": dbname,
                             "path": path,
                             "date": datetime.now(),
-                            "statut": "faild",
+                            "statut": "failed : "+str(e),
                             "instance_id": rec.id
                         })
-                        print ("ERROR1")
+
                 else:
 
                     try:
                         try:
-                            os.makedirs(rec.folder)
+                            os.makedirs(rec.folder+"/"+rec.db_name)
                         except OSError:
                             pass
 
-                        path = os.path.join(rec.folder, filename)
+                        #path = os.path.join(rec.folder, rec.db_name)
+                        path = os.path.join(rec.folder+"/"+rec.db_name, filename)
 
-                        sock = xmlrpclib.ServerProxy('http://localhost:8090/xmlrpc/db')
+                        sock = xmlrpclib.ServerProxy('http://' + rec.host + ':' + rec.port + '/xmlrpc/db')
                         all_database = sock.list()
                         print(all_database)
                         backup_file = open(path, 'wb')
-                        dump = base64.b64decode(sock.dump(rec.master_password,rec.db_name,rec.backup_format))
-                        print (dump)
-                        backup_file.write(dump)
-                        backup_file.close()
-                        self.env['kzm.backup'].create({
-                            "name": dbname,
-                            "path": path,
-                            "date": datetime.now(),
-                            "statut": "success",
-                            "instance_id": rec.id
+                        if rec.db_name in all_database:
+                            dump = base64.b64decode(sock.dump(rec.master_password, rec.db_name, rec.backup_format))
+                            print (dump)
+                            backup_file.write(dump)
+                            backup_file.close()
+                            self.env['kzm.backup'].create({
+                                "name": dbname,
+                                "path": path,
+                                "date": datetime.now(),
+                                "statut": "success",
+                                "instance_id": rec.id
 
-                        })
+                            })
+                        else:
+                            msg = "No Database named %s in this host." % rec.db_name
+                            raise ValidationError(msg)
+
 
                     except Exception as e:
 
@@ -191,15 +198,9 @@ class Instance(models.Model):
                             "name": dbname,
                             "path": path,
                             "date": datetime.now(),
-                            "statut": "faild",
+                            "statut": "failed : " + str(e),
                             "instance_id": rec.id
                         })
-                        print('Failed : ' + str(e))
-                        print ("ERROR2")
-
-
-
-
 
 
     @api.multi
@@ -241,11 +242,9 @@ class Instance(models.Model):
     def _compute_name(self):
         """Get the right summary for this job."""
         for rec in self:
-            rec.name = "%s/%s" % (rec.folder,rec.db_name)
+            rec.name = "%s/%s" % (rec.folder, rec.db_name)
 
     def ping(self):
         for rec in self:
             cnx = self.ssh_connection()
-            cnx.run("ping %s",self.host)
-
-
+            cnx.run("ping %s", self.host)

@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
         'views/instance_views.xml',
         'views/backup_views.xml',
+        'data/mail.xml',
 
     ],
     # only loaded in demonstration mode

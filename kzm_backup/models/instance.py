@@ -248,3 +248,16 @@ class Instance(models.Model):
         for rec in self:
             cnx = self.ssh_connection()
             cnx.run("ping %s", self.host)
+
+    @api.multi
+    def send_mail_template(self):
+        # Find the e-mail template
+        template = self.env.ref('kzm_backup.kzm_backup_email_template')
+
+        mail = self.env['mail.template'].browse(template.id)
+
+        print("#######################################")
+        print("Mail : ", mail)
+        print("#######################################")
+
+        mail.send_mail(self.id)

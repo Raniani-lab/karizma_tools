@@ -28,7 +28,7 @@
                     </div>
                     <group string="Basic backup configuration">
                         <field name="folder"/>
-                        <!--field name="days_to_keep"/-->
+                        <field name="days_to_keep"/>
                         <!--field name="method"/-->
                         <field name="backup_format"/>
                     </group>

@@ -37,7 +37,7 @@ class Instance(models.Model):
     host = fields.Char(string="Host", )
     user = fields.Char(string="User",)
     port = fields.Char("Port", )
-    ssh_key = fields.Text(string="SSH Key")
+    ssh_key = fields.Text(string="Password")
 
     db_name = fields.Char(string="DB name")
     db_user = fields.Char(string="DB user")
@@ -49,6 +49,12 @@ class Instance(models.Model):
         [("local", "Local disk"), ("sftp", "Remote SFTP server")],
         default="local",
         help="Choose the storage method for this backup.",
+    )
+    days_to_keep = fields.Integer(
+        required=True,
+        default=0,
+        help="Backups older than this will be deleted automatically. "
+             "Set 0 to disable autodeletion.",
     )
     color = fields.Integer(default=6)
     # sftp_host = fields.Char(
@@ -98,7 +104,7 @@ class Instance(models.Model):
         """Default to ``backups`` folder inside current server datadir."""
         return os.path.join(
             tools.config["data_dir"],
-            "backups",
+
             self.env.cr.dbname)
 
     def ssh_connection(self):
@@ -118,6 +124,7 @@ class Instance(models.Model):
 
     def action_backup(self):
         backup = None
+        successful = self.browse()
         for rec in self:
             dbname = rec.db_name
             dbuser = rec.db_user
@@ -158,15 +165,14 @@ class Instance(models.Model):
                             "statut": "failed : "+str(e),
                             "instance_id": rec.id
                         })
+                        self.send_mail_template()
 
                 else:
-
                     try:
                         try:
                             os.makedirs(rec.folder+"/"+rec.db_name)
                         except OSError:
                             pass
-
                         #path = os.path.join(rec.folder, rec.db_name)
                         path = os.path.join(rec.folder+"/"+rec.db_name, filename)
 
@@ -187,6 +193,7 @@ class Instance(models.Model):
                                 "instance_id": rec.id
 
                             })
+                            successful |= rec
                         else:
                             msg = "No Database named %s in this host." % rec.db_name
                             raise ValidationError(msg)
@@ -201,6 +208,8 @@ class Instance(models.Model):
                             "statut": "failed : " + str(e),
                             "instance_id": rec.id
                         })
+                        self.send_mail_template()
+        successful.cleanup()
 
 
     @api.multi
@@ -260,4 +269,43 @@ class Instance(models.Model):
         print("Mail : ", mail)
         print("#######################################")
 
-        mail.send_mail(self.id)
+        mail_id = mail.send_mail(self.id, force_send=True)
+
+    @api.multi
+    def cleanup(self):
+        """Clean up old backups."""
+        now = datetime.now()
+        for rec in self.filtered("days_to_keep"):
+            with rec.cleanup_log():
+                oldest = self.filename(now - timedelta(days=rec.days_to_keep))
+
+
+                for name in iglob(os.path.join(rec.folder+"/"+rec.db_name,
+                                               "*.dump.zip")):
+                    if os.path.basename(name) < oldest:
+                        os.unlink(name)
+
+
+    @api.multi
+    @contextmanager
+    def cleanup_log(self):
+        """Log a possible cleanup failure."""
+        self.ensure_one()
+        try:
+            _logger.info(
+                "Starting cleanup process after database backup: %s",
+                self.name)
+            yield
+        except Exception:
+            _logger.exception("Cleanup of old database backups failed: %s")
+            escaped_tb = tools.html_escape(traceback.format_exc())
+            # self.message_post(  # pylint: disable=translation-required
+            #     "<p>%s</p><pre>%s</pre>" % (
+            #         _("Cleanup of old database backups failed."),
+            #         escaped_tb),
+            #     subtype=self.env.ref("auto_backup.failure")
+            # )
+        else:
+            _logger.info(
+                "Cleanup of old database backups succeeded: %s",
+                self.name)

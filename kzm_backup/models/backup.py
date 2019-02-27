@@ -5,6 +5,7 @@ from odoo import models, fields, api
 
 class Backup(models.Model):
     _name = 'kzm.backup'
+    _order = 'date desc'
 
     name = fields.Char(string="Name")
     path = fields.Char(string="Path")

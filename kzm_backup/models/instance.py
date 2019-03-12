@@ -18,10 +18,22 @@ from odoo.service import db
 
 _logger = logging.getLogger(__name__)
 
+try:
+    import pysftp
+except ImportError:  # pragma: no cover
+    _logger.debug('Cannot import pysftp')
+
 
 class Instance(models.Model):
     _name = 'kzm.instance'
     _inherit = "mail.thread"
+
+    @api.model
+    def _default_user(self):
+        return self.env['res.users'].browse(self.env.uid)
+
+    def _get_default_company_id(self):
+        return self._context.get('force_company', self.env.user.company_id.id)
 
     name = fields.Char(
         compute="_compute_name",
@@ -57,35 +69,37 @@ class Instance(models.Model):
              "Set 0 to disable autodeletion.",
     )
     color = fields.Integer(default=6)
-    # sftp_host = fields.Char(
-    #     'SFTP Server',
-    #     help=(
-    #         "The host name or IP address from your remote"
-    #         " server. For example 192.168.0.1"
-    #     )
-    # )
-    # sftp_port = fields.Integer(
-    #     "SFTP Port",
-    #     default=22,
-    #     help="The port on the FTP server that accepts SSH/SFTP calls."
-    # )
-    # sftp_user = fields.Char(
-    #     'Username in the SFTP Server',
-    #     help=(
-    #         "The username where the SFTP connection "
-    #         "should be made with. This is the user on the external server."
-    #     )
-    # )
-    # sftp_password = fields.Char(
-    #     "SFTP Password",
-    #     help="The password for the SFTP connection. If you specify a private "
-    #          "key file, then this is the password to decrypt it.",
-    # )
-    # sftp_private_key = fields.Char(
-    #     "Private key location",
-    #     help="Path to the private key file. Only the Odoo user should have "
-    #          "read permissions for that file.",
-    # )
+    sftp_host = fields.Char(
+        'SFTP Server',
+        help=(
+            "The host name or IP address from your remote"
+            " server. For example 192.168.0.1"
+        )
+    )
+    sftp_port = fields.Integer(
+        "SFTP Port",
+        default=22,
+        help="The port on the FTP server that accepts SSH/SFTP calls."
+    )
+    sftp_user = fields.Char(
+        'Username in the SFTP Server',
+        help=(
+            "The username where the SFTP connection "
+            "should be made with. This is the user on the external server."
+        )
+    )
+    sftp_password = fields.Char(
+        "SFTP Password",
+        help="The password for the SFTP connection. If you specify a private "
+             "key file, then this is the password to decrypt it.",
+    )
+    sftp_private_key = fields.Char(
+        "Private key location",
+        help="Path to the private key file. Only the Odoo user should have "
+             "read permissions for that file.",
+    )
+
+    send_by_sftp = fields.Boolean("Send by SFTP")
 
     backup_format = fields.Selection(
         [
@@ -99,6 +113,13 @@ class Instance(models.Model):
 
     backup_ids = fields.One2many('kzm.backup', 'instance_id')
 
+    user_id = fields.Many2one('res.users', required=True, default=_default_user)
+    company_id = fields.Many2one('res.company', string='Company',
+                                 default=_get_default_company_id, required=True)
+
+
+
+
     @api.model
     def _default_folder(self):
         """Default to ``backups`` folder inside current server datadir."""
@@ -109,7 +130,6 @@ class Instance(models.Model):
 
     def ssh_connection(self):
         self.ensure_one()
-
         host = self.host
         user = self.user
 
@@ -126,6 +146,7 @@ class Instance(models.Model):
         backup = None
         successful = self.browse()
         for rec in self:
+            test = False
             dbname = rec.db_name
             dbuser = rec.db_user
             host = rec.host
@@ -169,10 +190,9 @@ class Instance(models.Model):
 
                 else:
                     try:
-                        try:
+                        if not os.path.exists(rec.folder+"/"+rec.db_name):
                             os.makedirs(rec.folder+"/"+rec.db_name)
-                        except OSError:
-                            pass
+
                         #path = os.path.join(rec.folder, rec.db_name)
                         path = os.path.join(rec.folder+"/"+rec.db_name, filename)
 
@@ -180,6 +200,7 @@ class Instance(models.Model):
                         all_database = sock.list()
                         print(all_database)
                         backup_file = open(path, 'wb')
+
                         if rec.db_name in all_database:
                             dump = base64.b64decode(sock.dump(rec.master_password, rec.db_name, rec.backup_format))
                             print (dump)
@@ -199,7 +220,20 @@ class Instance(models.Model):
                             raise ValidationError(msg)
 
 
+                        if rec.send_by_sftp:
+                            with rec.sftp_connection() as remote:
+                                # Directory must exist
+                                try:
+                                    path_dst = "//home//"+rec.sftp_user+"//Backup//"+rec.db_name
+                                    remote.makedirs(path_dst)
+                                    remote.put(path, path_dst+"//"+filename)
+                                except pysftp.ConnectionException:
+                                    pass
+
                     except Exception as e:
+                        # if test:
+                        #     msg = "No Database named %s in this host." % rec.db_name
+                        #     raise ValidationError(msg)
 
                         self.env['kzm.backup'].create({
                             "name": dbname,
@@ -261,13 +295,9 @@ class Instance(models.Model):
     @api.multi
     def send_mail_template(self):
         # Find the e-mail template
-        template = self.env.ref('kzm_backup.kzm_backup_email_template')
+        template = self.env.ref('kzm_backup.kzm_backup_email_template1')
 
         mail = self.env['mail.template'].browse(template.id)
-
-        print("#######################################")
-        print("Mail : ", mail)
-        print("#######################################")
 
         mail_id = mail.send_mail(self.id, force_send=True)
 
@@ -285,6 +315,41 @@ class Instance(models.Model):
                     if os.path.basename(name) < oldest:
                         os.unlink(name)
 
+    @api.multi
+    def sftp_connection(self):
+        """Return a new SFTP connection with found parameters."""
+        self.ensure_one()
+        params = {
+            "host": self.sftp_host,
+            "username": self.sftp_user,
+            "port": self.sftp_port,
+        }
+        _logger.debug(
+            "Trying to connect to sftp://%(username)s@%(host)s:%(port)d",
+            extra=params)
+        if self.sftp_private_key:
+            params["private_key"] = self.sftp_private_key
+            if self.sftp_password:
+                params["private_key_pass"] = self.sftp_password
+        else:
+            params["password"] = self.sftp_password
+
+
+        return pysftp.Connection(**params)
+
+    @api.multi
+    def action_sftp_test_connection(self):
+        """Check if the SFTP settings are correct."""
+        try:
+            # Just open and close the connection
+            with self.sftp_connection():
+                raise exceptions.Warning(_("Connection Test Succeeded!"))
+        except (pysftp.CredentialException,
+                pysftp.ConnectionException,
+                pysftp.SSHException):
+            _logger.info("Connection Test Failed!", exc_info=True)
+
+        raise exceptions.Warning(_("Connection Test Failed!"))
 
     @api.multi
     @contextmanager

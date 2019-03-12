@@ -27,6 +27,8 @@
                         </h1>
                     </div>
                     <group string="Basic backup configuration">
+                        <field name="user_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
                         <field name="folder"/>
                         <field name="days_to_keep"/>
                         <!--field name="method"/-->
@@ -46,13 +48,15 @@
                     <group string="Database Settings" attrs="{'invisible': [('backup_format', '=', 'sql')]}">
                         <field name="db_name"/>
                         <field name="master_password" password="True"/>
+                        <field name="send_by_sftp" />
                     </group>
                     <group string="Database Settings" attrs="{'invisible': [('backup_format', '!=', 'sql')]}">
                         <field name="db_name"/>
                         <field name="db_user"/>
                         <field name="password_user_db" password="True"/>
+
                     </group>
-                    <!--<div attrs="{'invisible': [('method', '!=', 'sftp')]}">
+                    <div attrs="{'invisible': [('send_by_sftp', '!=', True)]}"><!-- attrs="{'invisible': [('send_by_mail', '=', 'True')]}" -->
                         <div class="bg-warning text-warning">
                             <h3>Warning:</h3>
                             Use SFTP with caution! This writes files to external servers under the path you specify.
@@ -71,7 +75,7 @@
                                     string="Test SFTP Connection"
                                     icon="fa-television"/>
                         </group>
-                    </div>-->
+                    </div>
                     <separator string="Backup"/>
                     <field name="backup_ids">
                         <field name="name"/>
@@ -140,10 +144,8 @@
 
 
 
-        <menuitem name="Backup DB" id="kzm_backup.menu_root"/>
-
-        <menuitem name="Configuration" id="kzm_backup.configuration" parent="kzm_backup.menu_root"/>
-        <menuitem name="Instance" id="kzm_backup.instance" parent="kzm_backup.configuration"
+        <menuitem parent="base.next_id_9" name="Backup DB" id="kzm_backup.menu_root"/>
+        <menuitem name="Instance" id="kzm_backup.instance" parent="kzm_backup.menu_root"
                   action="kzm_instance_action_window"/>
     </data>
 </odoo>

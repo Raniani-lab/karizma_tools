@@ -20,7 +20,7 @@
         </record>
 
 
-        <menuitem name="Backup" id="backup" parent="kzm_backup.configuration"
+        <menuitem name="Backup" id="backup" parent="kzm_backup.menu_root"
                   action="kzm_backup_action_window"/>
 
     </data>

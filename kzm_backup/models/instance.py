@@ -332,7 +332,10 @@ class Instance(models.Model):
             if self.sftp_password:
                 params["private_key_pass"] = self.sftp_password
         else:
+            cnopts = pysftp.CnOpts()
+            cnopts.hostkeys = None
             params["password"] = self.sftp_password
+            params["cnopts"] = cnopts
 
 
         return pysftp.Connection(**params)

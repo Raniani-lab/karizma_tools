@@ -36,7 +36,7 @@ class Instance(models.Model):
         return self._context.get('force_company', self.env.user.company_id.id)
 
     name = fields.Char(
-        compute="_compute_name",
+        #compute="_compute_name",
         store=True,
         help="Summary of this backup process",
     )
@@ -319,10 +319,13 @@ class Instance(models.Model):
     def sftp_connection(self):
         """Return a new SFTP connection with found parameters."""
         self.ensure_one()
+        cnopts = pysftp.CnOpts()
+        cnopts.hostkeys = None
         params = {
             "host": self.sftp_host,
             "username": self.sftp_user,
             "port": self.sftp_port,
+            "cnopts": cnopts,
         }
         _logger.debug(
             "Trying to connect to sftp://%(username)s@%(host)s:%(port)d",
@@ -332,10 +335,9 @@ class Instance(models.Model):
             if self.sftp_password:
                 params["private_key_pass"] = self.sftp_password
         else:
-            cnopts = pysftp.CnOpts()
-            cnopts.hostkeys = None
+
             params["password"] = self.sftp_password
-            params["cnopts"] = cnopts
+            #params["cnopts"] = cnopts
 
 
         return pysftp.Connection(**params)

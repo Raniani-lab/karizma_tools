@@ -6,8 +6,6 @@ stages:
   - build
 
 tests:
-  tags:
-    - odoo
   stage: build
   script:
   - dropdb --if-exists $CI_BUILD_REF

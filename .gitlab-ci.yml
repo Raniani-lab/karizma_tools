@@ -18,4 +18,3 @@ tests:
   - ./env/odoo/odoo.py -d $CI_BUILD_REF --addons-path=./env/odoo/addons/,./ --log-level=warn --stop-after-init
   - ./env/odoo/odoo.py -d $CI_BUILD_REF --addons-path=./env/odoo/addons/,./ -i $PROJECT_MODULES --without-demo=all --log-level=warn --stop-after-init
   - ./env/odoo/odoo.py -d $CI_BUILD_REF --addons-path=./env/odoo/addons/,./ -i $PROJECT_MODULES --test-enable --log-level=warn --stop-after-init
-  - dropdb --if-exists $CI_BUILD_REF

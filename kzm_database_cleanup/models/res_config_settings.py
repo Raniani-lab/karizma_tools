@@ -57,7 +57,8 @@ class ResConfigSettings(models.TransientModel):
         self.cleanup_stock()
         sale_order_ids = self.env['sale.order'].search([])
         # cancel SO
-        sale_order_ids.action_cancel()
+        for so in sale_order_ids:
+            so.action_cancel()
         # daft SO
         sale_order_ids.action_draft()
         # delete SO

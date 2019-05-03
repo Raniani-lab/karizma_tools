@@ -60,9 +60,11 @@ class ResConfigSettings(models.TransientModel):
         for so in sale_order_ids:
             so.action_cancel()
         # daft SO
-        sale_order_ids.action_draft()
+        for so in sale_order_ids:
+            so.action_draft()
         # delete SO
-        sale_order_ids.unlink()
+        for so in sale_order_ids:
+            so.unlink()
         purchase_order_ids = self.env['purchase.order'].search([])
         # cancel PO
         purchase_order_ids.button_cancel()

@@ -29,6 +29,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-lg-6" title="Cleanup now">
+                                        <button name="cleanup_so" icon="fa-lg fa-refresh" type="object" string="Cleanup SO" class="btn-link"></button>
+                                    </div>
+                                    <div class="col-lg-6" title="Cleanup now">
+                                        <button name="cleanup_po" icon="fa-lg fa-refresh" type="object" string="Cleanup PO" class="btn-link"></button>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-12" title="Cleanup now">
                                         <button name="cleanup_all" icon="fa-lg fa-refresh" type="object" string="Cleanup All" class="btn-link"></button>
                                     </div>

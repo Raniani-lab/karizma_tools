@@ -50,6 +50,35 @@ class ResConfigSettings(models.TransientModel):
                             DELETE FROM stock_picking;""")
 
     @api.multi
+    def cleanup_so(self):
+        # cleanup ivoices
+        self.cleanup_ivoices()
+        # cleanup stock
+        self.cleanup_stock()
+        sale_order_ids = self.env['sale.order'].search([])
+        # cancel SO
+        for so in sale_order_ids:
+            so.action_cancel()
+        # daft SO
+        for so in sale_order_ids:
+            so.action_draft()
+        # delete SO
+        for so in sale_order_ids:
+            so.unlink()
+
+    @api.multi
+    def cleanup_po(self):
+        # cleanup ivoices
+        self.cleanup_ivoices()
+        # cleanup stock
+        self.cleanup_stock()
+        purchase_order_ids = self.env['purchase.order'].search([])
+        # cancel PO
+        purchase_order_ids.button_cancel()
+        # delete PO
+        purchase_order_ids.unlink()
+
+    @api.multi
     def cleanup_so_po(self):
         # cleanup ivoices
         self.cleanup_ivoices()

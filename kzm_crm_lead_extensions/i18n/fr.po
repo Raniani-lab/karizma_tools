@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-04 12:57+0000\n"
-"PO-Revision-Date: 2019-06-04 12:57+0000\n"
+"POT-Creation-Date: 2019-06-17 11:09+0000\n"
+"PO-Revision-Date: 2019-06-17 11:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,147 +18,147 @@ msgstr ""
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid " Services aux entreprises"
-msgstr ""
+msgstr " Services aux entreprises"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "ADMIN PUBLIC"
-msgstr ""
+msgstr "ADMIN PUBLIC"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "ASSOC / INSTITUT"
-msgstr ""
+msgstr "ASSOC / INSTITUT"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "AUTO-ENTR"
-msgstr ""
+msgstr "AUTO-ENTR"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__activity
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_activity
 msgid "Activity"
 msgstr "Activité"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__activity_sector
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_activity_sector
 msgid "Activity Sector"
-msgstr "Secteur d'activité"
+msgstr "Secteur d'activités"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Address"
 msgstr "Adresse"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Agroalimentaire"
-msgstr ""
+msgstr "Agroalimentaire"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "BTP / Matériaux de construction"
-msgstr ""
+msgstr "BTP / Matériaux de construction"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Banque / Assurance"
-msgstr ""
+msgstr "Banque / Assurance"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Bois / Papier / Carton / Imprimerie"
-msgstr ""
+msgstr "Bois / Papier / Carton / Imprimerie"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__denomination
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_denomination
 msgid "Business Name"
-msgstr "Raison Sociale"
+msgstr "Business Name"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Café / Restaurant"
-msgstr ""
+msgstr "Café / Restaurant"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__capital
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_capital
 msgid "Capital (in Dirahms)"
-msgstr "Capital en Dirhams"
+msgstr "Capital (in Dirahms)"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Chimie / Parachimie"
-msgstr ""
+msgstr "Chimie / Parachimie"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "City"
 msgstr "Ville"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Commerce / Négoce / Distribution"
-msgstr ""
+msgstr "Commerce / Négoce / Distribution"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Country"
 msgstr "Pays"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__creation_year
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_creation_year
 msgid "Creation year"
 msgstr "Année de création"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__effectif
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_effectif
 msgid "Effectif"
-msgstr ""
+msgstr "Effectif"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Entre 1 MDHS et 5 MDHS"
-msgstr ""
+msgstr "Entre 1 MDHS et 5 MDHS"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Entre 10 MDHS et 50 MDHS"
-msgstr ""
+msgstr "Entre 10 MDHS et 50 MDHS"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Entre 5 MDHS et 10 MDHS"
-msgstr ""
+msgstr "Entre 5 MDHS et 10 MDHS"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Entre 50 MDHS et 100 MDHS"
-msgstr ""
+msgstr "Entre 50 MDHS et 100 MDHS"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__existing
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_existing
 msgid "Existing"
 msgstr "Existant"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__futur_users
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_futur_users
 msgid "Futur users"
-msgstr "Nombre des futurs utilisateurs système"
+msgstr "Nombre des futurs utilisateurs du système"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Industrie pharmaceutique"
-msgstr ""
+msgstr "Industrie pharmaceutique"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Informatique / Télécoms"
-msgstr ""
+msgstr "Informatique / Télécoms"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Inférieur à 1MDHS"
-msgstr ""
+msgstr "Inférieur à 1MDHS"
 
 #. module: kzm_crm_lead_extensions
 #: model:ir.model,name:kzm_crm_lead_extensions.model_crm_lead
@@ -166,17 +166,17 @@ msgid "Lead/Opportunity"
 msgstr "Piste/opportunité"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__legal_status
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_legal_status
 msgid "Legal Status"
 msgstr "Statut juridique"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Machines et équipements / Automobile"
-msgstr ""
+msgstr "Machines et équipements / Automobile"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__method
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_method
 msgid "Method"
 msgstr "Méthode"
 
@@ -186,105 +186,105 @@ msgid "NO"
 msgstr "Non"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__nature
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_nature
 msgid "Nature"
-msgstr "Type"
+msgstr "Nature"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "P. PHYSIQUE"
-msgstr ""
+msgstr "P. PHYSIQUE"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__perimeter
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_perimeter
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Perimeter"
-msgstr "Périmètre"
+msgstr "Périmetre"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Plastique / Caoutchouc"
-msgstr ""
+msgstr "Plastique / Caoutchouc"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Qualification"
-msgstr ""
+msgstr "Qualification"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__rc
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_rc
 msgid "RC"
-msgstr ""
+msgstr "RC"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__reprisal_data
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_reprisal_data
 msgid "Reprisal Data"
 msgstr "Reprise de données"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "S.A"
-msgstr ""
+msgstr "S.A"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,legal_status:0
 msgid "SARL"
-msgstr ""
+msgstr "SARL"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Signaletic form"
 msgstr "Fiche signalétique"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__size
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_size
 msgid "Size"
 msgstr "Taille"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__specific_need
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_specific_need
 msgid "Specific Need"
 msgstr "Besoins spécifiques"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Specific informations"
-msgstr "Infos spécifiques"
+msgstr "Informations spécifique"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "State"
 msgstr "État"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Street 2..."
 msgstr "Rue 2..."
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "Street..."
 msgstr "Rue..."
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,turnover:0
 msgid "Supérieur à 100 MDHS"
-msgstr ""
+msgstr "Supérieur à 100 MDHS"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Textile / Habillement / Chaussure"
-msgstr ""
+msgstr "Textile / Habillement / Chaussure"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__turnover
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_turnover
 msgid "Turnover"
-msgstr "Chiffre d'affaires(en Dirhams)"
+msgstr "Chiffre d'affaires"
 
 #. module: kzm_crm_lead_extensions
-#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead__specifications
+#: model:ir.model.fields,field_description:kzm_crm_lead_extensions.field_crm_lead_specifications
 msgid "Upload specifications load"
-msgstr "Cahier des charges"
+msgstr "Upload specifications load"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,reprisal_data:0
@@ -292,22 +292,22 @@ msgid "YES"
 msgstr "Oui"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "ZIP"
 msgstr "Code postal"
 
 #. module: kzm_crm_lead_extensions
-#: model_terms:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
+#: model:ir.ui.view,arch_db:kzm_crm_lead_extensions.crm_lead_form
 msgid "e.g. www.odoo.com"
 msgstr "Ex. : www.odoo.com"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Édition / Communication / Multimédia"
-msgstr ""
+msgstr "Édition / Communication / Multimédia"
 
 #. module: kzm_crm_lead_extensions
 #: selection:crm.lead,activity_sector:0
 msgid "Études et conseils"
-msgstr ""
+msgstr "Études et conseils"
 

@@ -8,4 +8,4 @@ class ProjectProject(models.Model):
     _name = 'project.project'
     _inherit = ['project.project', 'mail.activity.mixin']
 
-    activity_ids = fields.Many2many('mail.activity.mixin', string="Project activities")
+    #activity_ids = fields.Many2many('mail.activity.mixin', string="Project activities")

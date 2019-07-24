@@ -65,3 +65,25 @@ class DbBackup(models.Model):
             bucket = client.get_bucket('kzm')
             return bucket
 
+
+
+# from google.cloud import storage
+# client = storage.Client()
+# # https://console.cloud.google.com/storage/browser/[bucket-id]/
+# bucket = client.get_bucket('kzm')
+# print(bucket)
+# #======= SEND FILE ======
+#
+# # # Then do other things...
+# # blob = bucket.get_blob('remote/path/to/file.txt')
+# # print(blob.download_as_string())
+# # blob.upload_from_string('New contents!')
+# file_to_send = '/home/karizma3/Desktop/test.py'
+# blob2 = bucket.blob('BOUGSTONE/ahmed.py')
+# blob2.upload_from_filename(filename=file_to_send)
+# print(file_to_send, " have been sended !!!!")
+# #==========================
+#
+# blob3 = bucket.get_blob('BOUGSTONE/ahmed.py')
+# print("Download from cloud==")
+# print(blob3.download_as_string())

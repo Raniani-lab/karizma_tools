@@ -10,6 +10,7 @@ import traceback
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from glob import iglob
+from google.cloud import storage
 
 from odoo import _, api, exceptions, fields, models, tools
 from odoo.service import db
@@ -23,26 +24,44 @@ except ImportError:  # pragma: no cover
 class DbBackup(models.Model):
     _inherit = 'db.backup'
 
+    method = fields.Selection(
+        [("local", "Local disk"),
+         ("sftp", "Remote SFTP server"),
+         ("gcloud", "Google cloud storage")],
+        default="local",
+        help="Choose the storage method for this backup.",
+    )
+    bucket_name = fields.Char(string="Bucket", help="https://console.cloud.google.com/storage/browser/[bucket-id]/")
+
     @api.multi
     def sftp_connection(self):
         """Return a new SFTP connection with found parameters."""
         self.ensure_one()
-        cnopts = pysftp.CnOpts()
-        cnopts.hostkeys = None
-        params = {
-            "host": self.sftp_host,
-            "username": self.sftp_user,
-            "port": self.sftp_port,
-            "cnopts": cnopts,
-        }
-        _logger.debug(
-            "Trying to connect to sftp://%(username)s@%(host)s:%(port)d",
-            extra=params)
-        if self.sftp_private_key:
-            params["private_key"] = self.sftp_private_key
-            if self.sftp_password:
-                params["private_key_pass"] = self.sftp_password
-        else:
-            params["password"] = self.sftp_password
+        if self.method != 'gcloud':
 
-        return pysftp.Connection(**params)
+            cnopts = pysftp.CnOpts()
+            cnopts.hostkeys = None
+            params = {
+                "host": self.sftp_host,
+                "username": self.sftp_user,
+                "port": self.sftp_port,
+                "cnopts": cnopts,
+            }
+            _logger.debug(
+                "Trying to connect to sftp://%(username)s@%(host)s:%(port)d",
+                extra=params)
+            if self.sftp_private_key:
+                params["private_key"] = self.sftp_private_key
+                if self.sftp_password:
+                    params["private_key_pass"] = self.sftp_password
+            else:
+                params["password"] = self.sftp_password
+
+            return pysftp.Connection(**params)
+        else:
+
+            client = storage.Client()
+            # https://console.cloud.google.com/storage/browser/[bucket-id]/
+            bucket = client.get_bucket('kzm')
+            return bucket
+

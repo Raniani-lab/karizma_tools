@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "OCA AUTO-BACKUP, KZM EXTENSION",
+    "name": "GCLOUD AUTO-BACKUP, OCA AUTO-BACKUP EXTENSION",
     "version": "0.2.3",
     "author": "Abdelmajid Elhamdaoui, KARIZMA CONSEIL",
     "license": 'AGPL-3',
@@ -17,6 +17,7 @@
         'auto_backup',
     ],
     "data": [
+        'views/db_backup.xml',
     ],
     "qweb": [
     ],

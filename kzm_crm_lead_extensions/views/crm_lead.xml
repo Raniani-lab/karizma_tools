@@ -81,7 +81,7 @@
                             </group>
                         </group>
                         <separator string = "Perimeter"/>
-                        <field name="perimeter"  widget="many2many_checkboxes" nolabel="1" style="display: block;"/>
+                        <field name="perimeter"  readonly="0" nolabel="1" style="display: block;"/>
                     </page>
                 </xpath>
             </field>

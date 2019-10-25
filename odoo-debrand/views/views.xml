@@ -125,7 +125,7 @@
     <!-- Debrand Assets -->
     <template id="title_extend" name="Extend Title" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/odoo-debrand-11/static/src/js/title.js"/>
+            <script type="text/javascript" src="/odoo-debrand/static/src/js/title.js"/>
         </xpath>
     </template>
     <!--Modify brand promotion details-->

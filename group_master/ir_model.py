@@ -31,8 +31,8 @@ class ir_model(models.Model):
         models = [
             'product.category',
             'product.attribute',
-            'uom.categ',
-            'uom.uom',
+            'product.uom.categ',
+            'product.uom',
             'product.template',
             'product.supplierinfo',
             'product.pricelist',

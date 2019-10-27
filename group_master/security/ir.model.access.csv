@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_uom_categ_master_product,product.uom.categ master_product,uom.model_uom_category,group_master.group_master_product,1,1,1,1
-access_product_uom_master_product,product.uom master_product,uom.model_uom_uom,group_master.group_master_product,1,1,1,1
+access_product_uom_categ_master_product,product.uom.categ master_product,product.model_product.uom_category,group_master.group_master_product,1,1,1,1
+access_product_uom_master_product,product.uom master_product,product.model_product_uom,group_master.group_master_product,1,1,1,1
 access_product_template_master_product,product.template master_product,product.model_product_template,group_master.group_master_product,1,1,1,1
 access_product_supplierinfo_master_product,product.supplierinfo master_product,product.model_product_supplierinfo,group_master.group_master_product,1,1,1,1
 access_product_pricelist_master_product,product.pricelist master_product,product.model_product_pricelist,group_master.group_master_product,1,1,1,1

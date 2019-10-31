@@ -37,7 +37,7 @@ odoo.define('odoo-debrand-11.title', function (require) {
             this._rpc({
                 fields: ['company_name',],
                 domain: [],
-                model: 'website',
+                model: 'res.company',
                 method: 'search_read',
                 limit: 1,
                 context: session.user_context,

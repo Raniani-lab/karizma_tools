@@ -3,7 +3,7 @@ from odoo.exceptions import Warning
 
 
 class OdooDebrand(models.Model):
-    _inherit = 'website'
+    _inherit = 'res.company'
 
     @api.one
     @api.depends('favicon')
@@ -33,15 +33,15 @@ class OdooDebrand(models.Model):
 class WebsiteConfig(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    company_logo = fields.Binary(related='website_id.company_logo',
+    company_logo = fields.Binary(related='company_id.company_logo',
                                  string="Company Logo",
                                  help="This field holds the image"
                                       " used for the Company Logo",
                                  readonly=False)
-    company_name = fields.Char(related='website_id.company_name',
+    company_name = fields.Char(related='company_id.company_name',
                                string="Company Name",
                                readonly=False)
-    company_website = fields.Char(related='website_id.company_website',
+    company_website = fields.Char(related='company_id.company_website',
                                   readonly=False)
 
     # Sample Error Dialogue

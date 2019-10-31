@@ -31,13 +31,12 @@
          stuffs.
     """,
 
-    'author': "Hilar AK",
-    'website': "https://www.linkedin.com/in/hilar-ak/",
+    'author': "Elhamdaoui Abdelmajid, Karizma Conseil",
+    'website': "https://www.karizma.ma",
     'category': 'Tools',
     'version': '12.0.5.0.3',
     'depends': [
         'base_setup',
-        'website',
     ],
     'data': [
         # 'data/mailbot_data.xml',

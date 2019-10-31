@@ -37,7 +37,7 @@ class BinaryCustom(Binary):
         imgext = '.png'
         # Here we are changing the default
         #  logo with logo selected on debrand settings
-        company_logo = request.env['website'].sudo().search([])[0].company_logo
+        company_logo = request.env['res.company'].sudo().search([])[0].company_logo
         custom_logo = tools.image_resize_image(company_logo, (150, None))
         placeholder = \
             functools.partial(get_resource_path,
@@ -117,11 +117,11 @@ class OdooDebrand(Database):
                 d['databases'] = [monodb]
 
         try:
-            website_id = request.env['website'].sudo().search([])
-            d['company_name'] = website_id and website_id[0].company_name
-            d['favicon_url'] = website_id and website_id[0].favicon_url or ''
+            company_id = request.env['res.company'].sudo().search([])
+            d['company_name'] = company_id and company_id[0].company_name
+            d['favicon_url'] = company_id and company_id[0].favicon_url or ''
             d['company_logo_url'] = \
-                website_id and website_id[0].company_logo_url or ''
+                company_id and company_id[0].company_logo_url or ''
             return env.get_template("database_manager_extend.html").render(d)
         except Exception as e:
             d['company_name'] = ''

@@ -35,7 +35,6 @@ class DbBackup(models.Model):
     GOOGLE_APPLICATION_CREDENTIALS = fields.Char("GOOGLE APPLICATION CREDENTIALS PATH")
     bucket_name = fields.Char(string="Bucket ID", help="https://console.cloud.google.com/storage/browser/[bucket-id]/")
 
-    @api.multi
     def sftp_connection(self):
         """Return a new SFTP connection with found parameters."""
         self.ensure_one()
@@ -70,7 +69,6 @@ class DbBackup(models.Model):
             return bucket
 
 
-    @api.multi
     def action_backup(self):
         """Run selected backups."""
         backup = None
@@ -104,7 +102,6 @@ class DbBackup(models.Model):
 
         return super(DbBackup, self).action_backup()
 
-    @api.multi
     def action_gcloud_test_connection(self):
         """Check if the Gcloud settings are correct."""
         try:
@@ -115,7 +112,6 @@ class DbBackup(models.Model):
             _logger.info("Connection Test Failed!:"+msg, exc_info=True)
             raise exceptions.Warning(_("Connection Test Failed!\n "+msg))
 
-    @api.multi
     @api.depends("folder", "method", "sftp_host", "sftp_port", "sftp_user")
     def _compute_name(self):
         """Get the right summary for this job."""
@@ -129,7 +125,6 @@ class DbBackup(models.Model):
                 rec.name = "Gloud: %s/%s" % (
                     rec.bucket_name, rec.folder)
 
-    @api.multi
     def cleanup(self):
         """Clean up old backups."""
         now = datetime.now()

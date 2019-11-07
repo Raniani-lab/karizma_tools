@@ -3,7 +3,7 @@
     <record id="view_db_backup_extension_gcloud" model="ir.ui.view">
         <field name="name">auto.backup.google.storage</field>
         <field name="model">db.backup</field>
-        <field name="inherit_id" ref="auto_backup.view_backup_conf_form"/>
+        <field name="inherit_id" ref="auto_backup.view_backup_config_form"/>
         <field name="arch" type="xml">
             <xpath expr="//separator[1]" position="before">
                 <div attrs="{'invisible': [('method', '!=', 'gcloud')]}">

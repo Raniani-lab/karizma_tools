@@ -8,7 +8,8 @@ class OdooDebrand(models.Model):
     @api.one
     @api.depends('favicon')
     def get_favicon(self):
-        self.favicon_url = \
+        if self.favicon:
+          self.favicon_url = \
             'data:image/png;base64,' + str(self.favicon.decode('UTF-8'))
         # python 3.x has sequence of bytes object,
         #  so we should decode it, else we get data starting with 'b'
@@ -24,10 +25,14 @@ class OdooDebrand(models.Model):
                                  help="This field holds"
                                       " the image used "
                                       "for the Company Logo")
+
+    company_logo_url = fields.Char("Url", compute='get_company_logo')
     company_name = fields.Char("Company Name", help="Branding Name")
     company_website = fields.Char("Company URL")
+    # this field bellow 'favicon' it's add to resolve a specific error in CreditInfo project
+    favicon = fields.Binary(string="Website Favicon", help="This field holds the image used to display a favicon on the website.")
+
     favicon_url = fields.Char("Url", compute='get_favicon')
-    company_logo_url = fields.Char("Url", compute='get_company_logo')
 
 
 class WebsiteConfig(models.TransientModel):

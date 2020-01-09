@@ -37,6 +37,7 @@
     'version': '12.0.5.0.3',
     'depends': [
         'base_setup',
+        'website',
     ],
     'data': [
         # 'data/mailbot_data.xml',

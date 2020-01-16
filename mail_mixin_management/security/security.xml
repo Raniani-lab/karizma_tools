@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record model="ir.module.category" id="mixin_category">
+            <field name="name">Managing activities</field>
+            <field name="description">Managing the mixin activity</field>
+            <field name="sequence">1</field>
+        </record>
+
+         <record id="activity_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="mixin_category"/>
+        </record>
+
+        <record id="activity_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.activity_managing_consultant'))]"/>
+            <field name="category_id" ref="mixin_category"/>
+        </record>
+
+           <record model="ir.module.category" id="msg_category">
+            <field name="name">Managing message</field>
+            <field name="description">Managing the messages</field>
+            <field name="sequence">1</field>
+        </record>
+
+         <record id="message_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="msg_category"/>
+        </record>
+
+        <record id="message_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.message_managing_consultant'))]"/>
+            <field name="category_id" ref="msg_category"/>
+        </record>
+
+          <record model="ir.module.category" id="note_category">
+            <field name="name">Managing Notes</field>
+            <field name="description">Managing the notes</field>
+            <field name="sequence">1</field>
+        </record>
+
+         <record id="note_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="note_category"/>
+        </record>
+
+        <record id="note_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.note_managing_consultant'))]"/>
+            <field name="category_id" ref="note_category"/>
+        </record>
+
+
+
+
+
+    </data>
+</odoo>

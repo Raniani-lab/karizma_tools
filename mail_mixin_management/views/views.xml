@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <record id="mail_message_view_form_inherited" model="ir.ui.view">
+        <field name="name">mail.message.view.form.inherit</field>
+        <field name="model">mail.message</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="mail.view_message_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='moderator_id']" position="after">
+              <field name="type_selection"/>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>
+

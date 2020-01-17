@@ -7,5 +7,5 @@ class MailActivityMixin(models.AbstractModel):
     activity_ids = fields.One2many(
         'mail.activity', 'res_id', 'Activities',
         auto_join=True,
-        groups="mail_mixin_management.message_managing_user",)
+        groups="mail_mixin_management.activity_managing_consultant",)
 

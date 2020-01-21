@@ -1,0 +1,13 @@
+fichier.txt
+group_master
+kzm_backup
+kzm_crm_lead_extensions
+kzm_database_cleanup
+kzm_odoo_theme_color
+kzm_project_activity
+kzm_support
+oca_auto_backup_extension
+odoo-debrand
+README.md
+requirements.txt
+runbot.json

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="mixin_category">
+            <field name="name">Managing activities</field>
+            <field name="description">Managing the mixin activity</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="activity_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="mixin_category"/>
+        </record>
+
+        <record id="activity_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.activity_managing_consultant'))]"/>
+            <field name="category_id" ref="mixin_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record model="ir.module.category" id="msg_category">
+            <field name="name">Managing message</field>
+            <field name="description">Managing the messages</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="message_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="msg_category"/>
+        </record>
+
+        <record id="message_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.message_managing_consultant'))]"/>
+            <field name="category_id" ref="msg_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record model="ir.module.category" id="note_category">
+            <field name="name">Managing Notes</field>
+            <field name="description">Managing the notes</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="note_managing_consultant" model="res.groups">
+            <field name="name">Consulter</field>
+            <field name="category_id" ref="note_category"/>
+        </record>
+
+        <record id="note_managing_user" model="res.groups">
+            <field name="name">Consulter et creer</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('mail_mixin_management.note_managing_consultant'))]"/>
+            <field name="category_id" ref="note_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+
+        </record>
+
+        <!-- Rules -->
+        <record id="see_message_rule" model="ir.rule">
+            <field name="name">see messages</field>
+            <field ref="model_mail_message" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <!--            <field name="domain_force">[('type_selection','=','comment')]</field>-->
+            <field name="domain_force">[('subtype_id','=',1 )]</field>
+            <field name="groups" eval="[(6,0, [ref('mail_mixin_management.message_managing_consultant')])]"/>
+        </record>
+
+        <record id="see_all_messages_rule" model="ir.rule">
+            <field name="name">see all messages</field>
+            <field ref="model_mail_message" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!--            <field name="domain_force">[('type_selection','=','comment')]</field>-->
+            <field name="domain_force">[('subtype_id','=',1 )]</field>
+            <field name="groups" eval="[(6,0, [ref('mail_mixin_management.message_managing_user')])]"/>
+        </record>
+
+        <record id="see_notes_rule" model="ir.rule">
+            <field name="name">see notes</field>
+            <field ref="model_mail_message" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <!--            <field name="domain_force">[('type_selection','=','note')]</field>-->
+            <field name="domain_force">[('subtype_id','=',2 )]</field>
+            <field name="groups" eval="[(6,0, [ref('mail_mixin_management.note_managing_consultant')])]"/>
+        </record>
+
+        <record id="see_all_notes_rule" model="ir.rule">
+            <field name="name">see all notes</field>
+            <field ref="model_mail_message" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!--            <field name="domain_force">[('type_selection','=','note')]</field>-->
+            <field name="domain_force">[('subtype_id','=',2 )]</field>
+
+            <field name="groups" eval="[(6,0, [ref('mail_mixin_management.note_managing_user')])]"/>
+        </record>
+
+
+    </data>
+</odoo>

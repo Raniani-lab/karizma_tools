@@ -15,26 +15,37 @@ class ResConfigSettings(models.TransientModel):
     def cleanup_invoices(self):
         # unreconcile
         self.cleanup_unreconcile()
-        # cancel incvoices
-        invoice_ids = self.env['account.invoice'].search([])
-        invoice_ids.action_invoice_cancel()
-        # daft incvoices
-        invoice_ids.action_invoice_draft()
-        invoice_ids.write({'move_name': False})
-        # delete incvoices
-        invoice_ids.unlink()
+        print('Invoices ----->')
+        self.env.cr.execute(""" DELETE FROM account_move_line;
+                                DELETE FROM account_move;""")
+        # # cancel incvoices
+        # invoice_ids = self.env['account.move'].search([])
+        # self.env.context = dict(self.env.context)
+        # self.env.context.update({'force_delete': True})
+        # invoice_ids.button_cancel()
+        # # daft incvoices
+        # invoice_ids.button_draft()
+        # # invoice_ids.write({'move_name': False})
+        # # delete incvoices
+        # invoice_ids.unlink()
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_payments(self):
         # unreconcile
         self.cleanup_unreconcile()
         # cancel payments
-        payment_ids = self.env['account.payment'].search([])
-        payment_ids.cancel()
-        # daft payments
-        payment_ids.action_draft()
-        payment_ids.write({'move_name': False})
-        # delete payments
-        payment_ids.unlink()
+        # payment_ids = self.env['account.payment'].search([])
+        # payment_ids.cancel()
+        # # daft payments
+        # payment_ids.action_draft()
+        # payment_ids.write({'move_name': False})
+        # # delete payments
+        # payment_ids.unlink()
+        self.env.cr.execute(""" DELETE FROM account_payment;""")
+
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_stock(self):
         self.env.cr.execute("""
@@ -44,6 +55,8 @@ class ResConfigSettings(models.TransientModel):
                             DELETE FROM stock_move_line;
                             DELETE FROM stock_move;
                             DELETE FROM stock_picking;""")
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_so(self):
         # cleanup invoices
@@ -60,6 +73,8 @@ class ResConfigSettings(models.TransientModel):
         # delete SO
         for so in sale_order_ids:
             so.unlink()
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_po(self):
         # cleanup invoices
@@ -71,6 +86,8 @@ class ResConfigSettings(models.TransientModel):
         purchase_order_ids.button_cancel()
         # delete PO
         purchase_order_ids.unlink()
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_so_po(self):
         # cleanup invoices
@@ -92,6 +109,8 @@ class ResConfigSettings(models.TransientModel):
         purchase_order_ids.button_cancel()
         # delete PO
         purchase_order_ids.unlink()
+        seq_ids = self.env['ir.sequence'].search([])
+        seq_ids.write({'number_next_actual': 1})
 
     def cleanup_all(self):
         # cleanup invoices

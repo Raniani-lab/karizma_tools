@@ -18,6 +18,7 @@
             <field name="implied_ids"
                    eval="[(4, ref('mail_mixin_management.activity_managing_consultant'))]"/>
             <field name="category_id" ref="mixin_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
         <record model="ir.module.category" id="msg_category">
@@ -36,6 +37,7 @@
             <field name="implied_ids"
                    eval="[(4, ref('mail_mixin_management.message_managing_consultant'))]"/>
             <field name="category_id" ref="msg_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
         <record model="ir.module.category" id="note_category">
@@ -54,57 +56,58 @@
             <field name="implied_ids"
                    eval="[(4, ref('mail_mixin_management.note_managing_consultant'))]"/>
             <field name="category_id" ref="note_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+
         </record>
 
         <!-- Rules -->
         <record id="see_message_rule" model="ir.rule">
             <field name="name">see messages</field>
-            <field ref="model_mail_message" name="model_id"/>
+            <field ref="mail.model_mail_message" name="model_id"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_unlink" eval="False"/>
-            <field name="domain_force">[('type_selection','=','comment')]
-            </field>
+            <!--            <field name="domain_force">[('type_selection','=','comment')]</field>-->
+            <field name="domain_force">[('subtype_id','=',1 )]</field>
             <field name="groups" eval="[(6,0, [ref('mail_mixin_management.message_managing_consultant')])]"/>
         </record>
 
-          <record id="see_all_messages_rule" model="ir.rule">
+        <record id="see_all_messages_rule" model="ir.rule">
             <field name="name">see all messages</field>
-            <field ref="model_mail_message" name="model_id"/>
+            <field ref="mail.model_mail_message" name="model_id"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_unlink" eval="True"/>
-            <field name="domain_force">[('type_selection','=','comment')]
-            </field>
+            <!--            <field name="domain_force">[('type_selection','=','comment')]</field>-->
+            <field name="domain_force">[('subtype_id','=',1 )]</field>
             <field name="groups" eval="[(6,0, [ref('mail_mixin_management.message_managing_user')])]"/>
         </record>
 
         <record id="see_notes_rule" model="ir.rule">
             <field name="name">see notes</field>
-            <field ref="model_mail_message" name="model_id"/>
+            <field ref="mail.model_mail_message" name="model_id"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_unlink" eval="False"/>
-            <field name="domain_force">[('type_selection','=','note')]
-            </field>
+            <!--            <field name="domain_force">[('type_selection','=','note')]</field>-->
+            <field name="domain_force">[('subtype_id','=',2 )]</field>
             <field name="groups" eval="[(6,0, [ref('mail_mixin_management.note_managing_consultant')])]"/>
         </record>
 
-          <record id="see_all_notes_rule" model="ir.rule">
+        <record id="see_all_notes_rule" model="ir.rule">
             <field name="name">see all notes</field>
-            <field ref="model_mail_message" name="model_id"/>
+            <field ref="mail.model_mail_message" name="model_id"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_unlink" eval="True"/>
-            <field name="domain_force">[('type_selection','=','note')]
-            </field>
+            <!--            <field name="domain_force">[('type_selection','=','note')]</field>-->
+            <field name="domain_force">[('subtype_id','=',2 )]</field>
             <field name="groups" eval="[(6,0, [ref('mail_mixin_management.note_managing_user')])]"/>
         </record>
-
 
 
     </data>

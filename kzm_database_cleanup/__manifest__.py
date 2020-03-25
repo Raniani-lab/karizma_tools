@@ -3,7 +3,7 @@
 
 {
     "name": "kZM Database Cleanup",
-    "version": "0.2.3",
+    "version": "13.0",
     "author": "Karizma",
     "license": 'AGPL-3',
     "description": """

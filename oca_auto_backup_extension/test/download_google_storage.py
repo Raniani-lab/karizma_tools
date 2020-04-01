@@ -14,6 +14,7 @@ bucket_name = "kzm"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
 def get_client_bucket(bucket_name):
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
     client = storage.Client()
     bucket = client.get_bucket(bucket_name)
     return client, bucket
@@ -23,6 +24,7 @@ def upload_blob(bucket_name, source_file_name, folder_gcp, filename_gcp):
     # bucket_name = "your-bucket-name"
     # source_file_name = "local/path/to/file"
     # destination_blob_name = "storage-object-name"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
     destination_blob_name = os.path.join(folder_gcp, filename_gcp)
     
@@ -42,6 +44,7 @@ def download_blob(bucket_name, folder_gcp, filename_gcp, destination_file_name):
     # bucket_name = "your-bucket-name"
     # source_blob_name = "storage-object-name"
     # destination_file_name = "local/path/to/file"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
     source_blob_name = os.path.join(folder_gcp, filename_gcp)
 
